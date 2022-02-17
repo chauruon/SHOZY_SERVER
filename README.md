@@ -1,6 +1,6 @@
-SHOZY <br />
+SHOZY
 
-cd existing_repo <br />
-git remote add origin https://github.com/qanh1604/SHOZY.git <br />
-git branch -M main <br />
+cd existing_repo
+git remote add origin https://github.com/qanh1604/SHOZY.git
+git branch -M main
 git push -uf origin main
