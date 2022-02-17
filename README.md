@@ -1,6 +1,6 @@
-SHOZY
+SHOZY <br />
 
-cd existing_repo
-git remote add origin https://gitlab.com/sunshine1/chemcare.git
-git branch -M main
+cd existing_repo <br />
+git remote add origin https://github.com/qanh1604/SHOZY.git <br />
+git branch -M main <br />
 git push -uf origin main
