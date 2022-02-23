@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible"
+			content="IE=edge">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>{{title}}</title>
+
+		<!--/ Prevent the demo from appearing in search engines -->
+		<meta name="robots"
+			content="noindex">
+
+		<link type="text/css"
+			href="/assets/lib/bootstrap.min.css"
+			rel="stylesheet">
+
+		<!-- Perfect Scrollbar -->
+		<link type="text/css"
+			href="/assets/lib/perfect-scrollbar.css"
+			rel="stylesheet">
+
+		<!-- App CSS -->
+		<link type="text/css"
+			href="/assets/css/app.css"
+			rel="stylesheet">
+
+		<!-- Material Design Icons -->
+		<link type="text/css"
+			href="/assets/css/vendor-material-icons.css"
+			rel="stylesheet">
+
+		<!-- Font Awesome FREE Icons -->
+		<link type="text/css"
+			href="/assets/css/vendor-fontawesome-free.css"
+			rel="stylesheet">
+
+		<!-- toast -->
+		<link type="text/css"
+			href="/assets/lib/toastr.min.css"
+			rel="stylesheet">
+
+		<!-- Flatpickr -->
+		<link type="text/css"
+			href="/assets/css/vendor-flatpickr.css"
+			rel="stylesheet">
+
+		<link type="text/css"
+			href="/assets/css/vendor-flatpickr-airbnb.css"
+			rel="stylesheet">
+
+
+		<!-- Vector Maps -->
+		<link type="text/css"
+			href="/assets/lib/jqvmap/jqvmap.min.css"
+			rel="stylesheet">
+
+		<style>
+			.form-height{
+				width: 25%;
+			}
+		</style>
+	</head>
+
+
+	<body class="layout-login">
+		{{{body}}}
+
+
+		<script src="/assets/lib/jquery.min.js"></script>
+
+		<!-- Bootstrap -->
+		<script src="/assets/lib/popper.min.js"></script>
+		<script src="/assets/lib/bootstrap.min.js"></script>
+		{{!-- <script src="/assets/lib/jquery-3.3.1.slim.min.js"></script> --}}
+		<script src="/assets/lib/bootstrap.bundle.min.js"></script>
+		<script src="/assets/lib/jquery.countdown.min.js"></script>
+
+		<!-- Perfect Scrollbar -->
+		<script src="/assets/lib/perfect-scrollbar.min.js"></script>
+
+		<!-- DOM Factory -->
+		<script src="/assets/lib/dom-factory.js"></script>
+
+		<!-- MDK -->
+		<script src="/assets/lib/material-design-kit.js"></script>
+
+		<!-- App -->
+		<script src="/assets/js/toggle-check-all.js"></script>
+		<script src="/assets/js/check-selected-row.js"></script>
+		<script src="/assets/js/dropdown.js"></script>
+		<script src="/assets/js/sidebar-mini.js"></script>
+		<script src="/assets/js/app.js"></script>
+
+		<!-- App Settings (safe to remove) -->
+
+		<script src="/assets/lib/toastr.min.js"></script>
+		<script src="/assets/js/toastr.js"></script>
+
+		{{!-- @if (session('error'))
+			<p style="color: red" id="error" data-title="{{ session('error')['message_title'] }}" data-message="{{ session('error')['message'] }}"></p>
+		@endif
+		@if (session('success'))
+			<p style="color: green" id="success" data-notify="{{ session('success')}}"></p>
+		@endif --}}
+
+
+		<script>
+			$(document).ready(function(){
+				toastr.options = {
+					"closeButton": true,
+					"debug": false,
+					"newestOnTop": false,
+					"progressBar": true,
+					"positionClass": "toast-top-right",
+					"preventDuplicates": false,
+					"onclick": null,
+					"showDuration": "300",
+					"hideDuration": "1000",
+					"timeOut": "10000",
+					"extendedTimeOut": "10000",
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "slideDown",
+					"hideMethod": "fadeOut",
+				};
+				if($("#error").length){
+					toastr.error($("#error").data('message'), $("#error").data('title'));
+				}
+				if($("#success").length){
+					toastr.success($("#success").data('notify'));
+				}
+			});
+
+			$(document).ready(function() {
+				var valSession = $('#login_counter').val();
+				function get5MinuteFromNow() {
+					{{!-- get 15 day from now above --}}
+					{{!-- return new Date(new Date().valueOf() + 15 * 24 * 60 * 60 * 1000); --}}
+					return new Date(new Date().valueOf() + 300 * 1000);
+				};
+				if (valSession >= 3) {
+					$('#count_down').countdown(get5MinuteFromNow(), function(event) {
+						
+						$('#btn_login').attr('disabled','true');
+						$('input[name="username"]').attr('disabled','true');
+						$('input[name="password"]').attr('disabled','true');
+						
+						var $this = $(this).html(event.strftime('Vui lòng chờ sau '+ '<span>%M</span> phút ' + '<span>%S</span> giây'));
+						var minutesCountDown = event.offset.minutes;
+						var secondsCountDown = event.offset.seconds;
+						if (minutesCountDown == 0  && secondsCountDown == 0) {
+							$('input[name="username"]').removeAttr('disabled');
+							$('input[name="password"]').removeAttr('disabled');
+							$("#btn_login").removeAttr('disabled');
+							$this.hide();
+						}
+					});
+				}
+
+				$('#forget_pass').click(function(){
+					toastWarning("Vui lòng liên hệ bên phòng nhân sự hoặc phòng IT");
+				});
+			});
+		</script>
+	</body>
 </html>
