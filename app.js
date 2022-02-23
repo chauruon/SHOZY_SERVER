@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const jsdom = require('jsdom')
 var mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -10,7 +11,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var all_routes = require('./routes/index');
-
+const dom = new jsdom.JSDOM("");
 var app = express();
 
 mongoose
