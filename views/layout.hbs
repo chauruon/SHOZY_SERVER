@@ -6,7 +6,7 @@
 			content="IE=edge">
 		<meta name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+					
 		<title>{{title}}</title>
 
 		<!--/ Prevent the demo from appearing in search engines -->
@@ -36,6 +36,11 @@
 		<link type="text/css"
 			href="/assets/css/vendor-fontawesome-free.css"
 			rel="stylesheet">
+
+		<script
+			type="text/javascript"
+			src="//code.jquery.com/jquery-1.11.0.min.js"
+			></script>
 
 		<!-- toast -->
 		<link type="text/css"
@@ -68,7 +73,6 @@
 	<body class="layout-login">
 		{{{body}}}
 
-
 		<script src="/assets/lib/jquery.min.js"></script>
 
 		<!-- Bootstrap -->
@@ -94,21 +98,12 @@
 		<script src="/assets/js/sidebar-mini.js"></script>
 		<script src="/assets/js/app.js"></script>
 
-		<!-- App Settings (safe to remove) -->
-
+		{{!-- toast --}}
 		<script src="/assets/lib/toastr.min.js"></script>
 		<script src="/assets/js/toastr.js"></script>
 
-		{{!-- @if (session('error'))
-			<p style="color: red" id="error" data-title="{{ session('error')['message_title'] }}" data-message="{{ session('error')['message'] }}"></p>
-		@endif
-		@if (session('success'))
-			<p style="color: green" id="success" data-notify="{{ session('success')}}"></p>
-		@endif --}}
-
-
 		<script>
-			$(document).ready(function(){
+			$(document).ready(function() {
 				toastr.options = {
 					"closeButton": true,
 					"debug": false,
@@ -126,44 +121,35 @@
 					"showMethod": "slideDown",
 					"hideMethod": "fadeOut",
 				};
-				if($("#error").length){
-					toastr.error($("#error").data('message'), $("#error").data('title'));
-				}
-				if($("#success").length){
-					toastr.success($("#success").data('notify'));
-				}
-			});
-
-			$(document).ready(function() {
 				var valSession = $('#login_counter').val();
 				function get5MinuteFromNow() {
 					{{!-- get 15 day from now above --}}
 					{{!-- return new Date(new Date().valueOf() + 15 * 24 * 60 * 60 * 1000); --}}
 					return new Date(new Date().valueOf() + 300 * 1000);
 				};
-				if (valSession >= 3) {
-					$('#count_down').countdown(get5MinuteFromNow(), function(event) {
-						
-						$('#btn_login').attr('disabled','true');
-						$('input[name="username"]').attr('disabled','true');
-						$('input[name="password"]').attr('disabled','true');
-						
-						var $this = $(this).html(event.strftime('Vui lòng chờ sau '+ '<span>%M</span> phút ' + '<span>%S</span> giây'));
-						var minutesCountDown = event.offset.minutes;
-						var secondsCountDown = event.offset.seconds;
-						if (minutesCountDown == 0  && secondsCountDown == 0) {
-							$('input[name="username"]').removeAttr('disabled');
-							$('input[name="password"]').removeAttr('disabled');
-							$("#btn_login").removeAttr('disabled');
-							$this.hide();
-						}
-					});
-				}
+					if (valSession >= 3) {
+						$('#count_down').countdown(get5MinuteFromNow(), function(event) {
+							
+							$('#btn_login').attr('disabled','true');
+							$('input[name="username"]').attr('disabled','true');
+							$('input[name="password"]').attr('disabled','true');
+							
+							var $this = $(this).html(event.strftime('Vui lòng chờ sau '+ '<span>%M</span> phút ' + '<span>%S</span> giây'));
+							var minutesCountDown = event.offset.minutes;
+							var secondsCountDown = event.offset.seconds;
+							if (minutesCountDown == 0  && secondsCountDown == 0) {
+								$('input[name="username"]').removeAttr('disabled');
+								$('input[name="password"]').removeAttr('disabled');
+								$("#btn_login").removeAttr('disabled');
+								$this.hide();
+							}
+						});
+					}
 
-				$('#forget_pass').click(function(){
-					toastWarning("Vui lòng liên hệ bên phòng nhân sự hoặc phòng IT");
+					$('#forget_pass').click(function(){
+						toastWarning("Vui lòng liên hệ bên phòng nhân sự hoặc phòng IT");
+					});
 				});
-			});
 		</script>
 	</body>
 </html>

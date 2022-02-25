@@ -1,5 +1,3 @@
-    
-    
     <div class="layout-login__overlay"></div>
     <div class="layout-login__form bg-white form-height"
             data-perfect-scrollbar>
@@ -15,18 +13,33 @@
             </a>
         </div>
         <h4 class="m-0 fs-1">Welcome back!</h4>
-        <p class="mb-5">Login to access your Shozy Account</p>
+        <p class="mb-5">Register to access your Shozy Account</p>
         
-        <form action="/login-submit" method="POST" id="form">
-
-        <div style="color: red; font-weight: bold;"  id="count_down" ></div>
-
+        <form action="/register/user" method="POST" id="form">
+            <div style="color: red; font-weight: bold;"  id="count_down" ></div>
             <div class="form-group">
-                <label class="text-label">Tên tài khoản</label>
+                <label class="text-label">Họ và Tên</label>
                 <div class="input-group input-group-merge">
                     <input class="form-control form-control-prepended"
                         id="username"
                         name="username"
+                        oninvalid="this.setCustomValidity('Vui lòng nhập họ và tên!')"
+                        onchange="this.setCustomValidity('')"
+                        maxlength="50"
+                        placeholder="Nhập họ và tên">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="far fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="text-label">Số điện thoại</label>
+                <div class="input-group input-group-merge">
+                    <input class="form-control form-control-prepended"
+                        id="numPhone"
+                        name="numPhone"
                         oninvalid="this.setCustomValidity('Vui lòng nhập tên tài khoản!')"
                         onchange="this.setCustomValidity('')"
                         required=""
@@ -49,7 +62,6 @@
                         type="password"
                         oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu!')"
                         onchange="this.setCustomValidity('')"  
-                        required=""
                         maxlength="50"
                         placeholder="Nhập mật khẩu">
                     <div class="input-group-prepend">
@@ -59,22 +71,35 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group mb-5">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox"
-                            class="custom-control-input"
-                            id="remember">
-                    <label class="custom-control-label"
-                            for="remember">Ghi nhớ</label>
-                </div>
-            </div>
-            
             <div class="form-group">
-                <div class="d-flex justify-content-center">
-                    <button id="btn_login"  type="submit" class="btn btn_login btn-primary mb-5">Đăng nhập</button>
-                    <button id="btn_login"  type="button" class="btn btn_login btn-primary ml-5 mb-5">Đăng ký</button>
+                <label class="text-label">Địa chỉ</label>
+                <div class="input-group input-group-merge">
+                    <input class="form-control form-control-prepended"
+                        id="address"
+                        name="address"
+                        oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ!')"
+                        onchange="this.setCustomValidity('')"
+                        maxlength="50"
+                        placeholder="Nhập tên địa chỉ">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="far fa-user"></i>
+                        </div>
+                    </div>
                 </div>
-                <a href="javascript:void(0)" type="button" id="forget_pass">Quên mật khẩu</a>
+            </div>            
+            <div class="form-group text-center">
+                <button id="register"  type="submit" class="btn btn_login btn-primary ml-5 mb-5">Đăng ký</button>
             </div>
         </form>
     </div>
+
+
+    <script>
+        $(document).ready(function(){
+        {{!-- $('#register').click( function (e) {
+                e.preventDefault();
+                window.location.href = '/register/user';
+            }) --}}
+        });
+    </script>
