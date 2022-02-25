@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userModels = new Schema(
     {
         numPhone : {
-            type : Int16Array,
+            type : Number,
             required: true
         },
         username : {
@@ -15,8 +15,18 @@ const userModels = new Schema(
         },
         password : {
             type : String,
-        }
+            required: true
+        },
+        isAdmin : {
+            type : Boolean,
+        },
+        cart_id: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'carts'
+            }
+        ],
     },
     {timestamps: true}
 );
-module.exports = mongoose.model('Users',userModels);
+module.exports = mongoose.model('users',userModels);

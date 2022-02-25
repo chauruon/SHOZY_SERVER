@@ -1,7 +1,8 @@
 	var express = require('express');
 	var router = express.Router();
 
-	const {signup} = require('../controllers/userController');
+	const { signup,login,updateUser} = require('../controllers/userController');
+	const { createProduct,update_product } = require('../controllers/productController');
 	const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 
 	
@@ -15,4 +16,14 @@
 		res.render('auth/register');
 	});
 	router.post('/register/user',signup);
+	router.post('/login',login);
+	router.put('/user/:id',updateUser);
+
+	// Productions
+	router.post("/createProduct",createProduct);
+	router.post("/updateProd/:id",update_product);
+
+
+
+	
 module.exports = router;

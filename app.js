@@ -10,7 +10,7 @@ var all_routes = require('./routes/index');
 var app = express();
 
 
-mongoose.connect(process.env.DB_URL, {
+mongoose.connect(process.env.DB_ACCESS_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 }).then(() => console.log("Connected successfully to server!"))
