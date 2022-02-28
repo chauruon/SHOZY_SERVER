@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
 		const newuser = new User({
 			numPhone : numPhone,
 			username : username,
-			isAdmin: true,
+			isAdmin: false,
 			password : CryptoJS.AES.encrypt(req.body.password,process.env.ACCESS_SECRET).toString(),
 			address : address, 
 		});
@@ -64,38 +64,30 @@ exports.login = async (req,res) =>{
 };
 
 
-exports.updateUser = () =>{
-	try {
-		verifyTokenAndAuthoriation( async (req,res,next) => {
-			if(req.body.password){
-				req.body.password = CryptoJS.AES.encrypt(req.body.password,process.env.ACCESS_SECRET).toString();
-			}
-			try {
-				const updateUser = await User.findByIdAndUpdate(req.params.id, {
-						$set: req.body
-					},
-					{new:true}
-				);
-				res.status(200).json({
-					status: true,
-					message: "Đã cập nhật thông tin thành công!",
-					data: {
-						updateUser
-					}
-				});
-			} catch (err) {
-				console.log(err);
-				res.status(500).json({
-					status: false,
-					message:"Cập nhật thông tin không thành công!",
-				});
-			}
-		});
-	} catch (err) {
-		console.log(err);
-		res.status(400).json({
-			status: false,
-			message:"Vui lòng liêm hệ admin",
-		});
-	}
+exports.updateUser = async (req,res,next) =>{
+		verifyTokenAndAuthoriation();
+
+		if(req.body.password){
+			req.body.password = CryptoJS.AES.encrypt(req.body.password,process.env.ACCESS_SECRET).toString();
+		}
+		try {
+			const updateUser = await User.findByIdAndUpdate(req.params.id, {
+					$set: req.body
+				},
+				{new:true}
+			);
+			res.status(200).json({
+				status: true,
+				message: "Đã cập nhật thông tin thành công!",
+				data: {
+					updateUser
+				}
+			});
+		} catch (err) {
+			console.log(err);
+			res.status(500).json({
+				status: false,
+				message:"Cập nhật thông tin không thành công!",
+			});
+		}
 };

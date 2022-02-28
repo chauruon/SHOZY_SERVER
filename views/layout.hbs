@@ -103,7 +103,7 @@
 		<script src="/assets/js/toastr.js"></script>
 
 		<script>
-			$(document).ready(function() {
+			{{!-- $(document).ready(function() {
 				toastr.options = {
 					"closeButton": true,
 					"debug": false,
@@ -122,10 +122,10 @@
 					"hideMethod": "fadeOut",
 				};
 				var valSession = $('#login_counter').val();
-				function get5MinuteFromNow() {
+				function get5MinuteFromNow() { --}}
 					{{!-- get 15 day from now above --}}
 					{{!-- return new Date(new Date().valueOf() + 15 * 24 * 60 * 60 * 1000); --}}
-					return new Date(new Date().valueOf() + 300 * 1000);
+					{{!-- return new Date(new Date().valueOf() + 300 * 1000);
 				};
 					if (valSession >= 3) {
 						$('#count_down').countdown(get5MinuteFromNow(), function(event) {
@@ -149,7 +149,7 @@
 					$('#forget_pass').click(function(){
 						toastWarning("Vui lòng liên hệ bên phòng nhân sự hoặc phòng IT");
 					});
-				});
+			}); --}}
 		</script>
 	</body>
 </html>
