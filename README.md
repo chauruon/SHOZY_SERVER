@@ -5,4 +5,5 @@ git remote add origin https://github.com/qanh1604/SHOZY.git <br>
 git branch -M main <br>
 git push -uf origin main
 
-Run server: nodemon 
+install package: npm i
+Run server: npm start
