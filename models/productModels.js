@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; 
 
-const productModels = new Schema(
-    {
+const productModels = new Schema({
         name : {
             type : String,
             required: true
@@ -34,15 +33,16 @@ const productModels = new Schema(
         star:{
             type: String,
         },
-        category_id:{
+        categoris:{
             type: Schema.Types.ObjectId,
             ref: "category"
         },
-        size_id:{
-            type: Schema.Types.ObjectId,
+        sizes:{
+            type: Schema.Types.Array,
             ref: "sizes"
         },
     },
     {timestamps: true}
 );
+
 module.exports = mongoose.model('productions',productModels);

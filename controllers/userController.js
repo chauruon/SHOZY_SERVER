@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
 		return res.status(200).json({
 			status: true,
 			data:{
-				userRegiter,
+				...userRegiter._doc,
 			}
 		});
 	} catch (error) {
@@ -31,7 +31,7 @@ exports.signup = async (req, res) => {
 	}
 };
 
-exports.login = async (req,res) =>{
+exports.login = async(req,res) =>{
 	try {
 		const user = await User.findOne({numPhone: req.body.numPhone})
 		!user && res.status(401).json("Tài khoản đã tồn tại!");

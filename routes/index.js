@@ -1,8 +1,8 @@
 	var express = require('express');
 	var router = express.Router();
 
-	const { signup,login,updateUser} = require('../controllers/userController');
-	const { createProduct,update_product } = require('../controllers/productController');
+	const User = require('../controllers/userController');
+	const { createProduct,update_product,get_product} = require('../controllers/productController');
 	const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 	const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
 	
@@ -15,8 +15,19 @@
 	router.get('/register', function(req, res, next) {
 		res.render('auth/register');
 	});
-	router.post('/register/user',signup);
-	router.post('/login',login);
+	router.post('/register/user',User.signup);
+
+
+
+	router.post('/login',async (req, res) => {
+		await User.login(req, res);
+		res.redirect('/home');
+	});
+
+	
+	
+	
+	// cập nhật user vẫn chưa được
 	router.put('/user/:id',verifyTokenAndAuthoriation, async(req,res) => {
 		if (req.body.password) {
 			req.body.password = CryptoJS.AES.encrypt(req.body.password,process.env.ACCESS_SECRET).toString();
@@ -44,8 +55,9 @@
 	});
 
 	// Productions
-	router.post("/createProduct",createProduct);
+	router.post("/createProd",createProduct);
 	router.post("/updateProd/:id",update_product);
+	router.get("/getProd",get_product);
 
 
 

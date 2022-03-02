@@ -5,10 +5,8 @@ const orderModels = new Schema({
     name:{
         type: String,
     },
-    desc: { 
+    description: { 
         type: String,
-        trim: true ,
-        required: true
     },
     quatity:{
         type: Number,
@@ -26,17 +24,17 @@ const orderModels = new Schema({
         type: String,
         trim: true,
     },
-    user_id:[
+    users:[
         {
             type: Schema.Types.ObjectId,
             ref: "users",
         }
     ],
-    cart_id:[{
+    carts:[{
         type: Schema.Types.ObjectId,
         ref: "carts",
     }],
-    product_id:[{
+    products:[{
         type: Schema.Types.ObjectId,
         ref: "productions",
     }],

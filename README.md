@@ -6,4 +6,5 @@ git branch -M main <br>
 git push -uf origin main
 
 Install package: npm i <br>
-Run server: npm start
+Run server: npm start <br>
+Clean cache: npm cache clean --force

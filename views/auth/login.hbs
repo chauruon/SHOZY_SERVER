@@ -16,17 +16,16 @@
         <h4 class="m-0 fs-1">Welcome back!</h4>
         <p class="mb-5">Login to access your Shozy Account</p>
         
-        <form action="/login-submit" method="POST" id="form">
-
-        <div style="color: red; font-weight: bold;"  id="count_down" ></div>
+        <form action="/login" method="POST" id="form">
+            <div style="color: red; font-weight: bold;"  id="count_down" ></div>
 
             <div class="form-group">
-                <label class="text-label">Tên tài khoản</label>
+                <label class="text-label">Số điện thoại</label>
                 <div class="input-group input-group-merge">
                     <input class="form-control form-control-prepended"
-                        id="username"
-                        name="username"
-                        oninvalid="this.setCustomValidity('Vui lòng nhập tên tài khoản!')"
+                        id="numPhone"
+                        name="numPhone"
+                        oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại!')"
                         onchange="this.setCustomValidity('')"
                         required=""
                         maxlength="50"
