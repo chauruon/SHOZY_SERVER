@@ -6,24 +6,64 @@
 	const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 	const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
 	
-	/* GET home page. */
-	router.get('/', function(req, res, next) {
-		res.render('auth/login');
+	// VIEW DASHBOARD
+	router.get('/dashboard', function(req, res, next) {
+		res.render('pages/dashboard');
 	});
 
-	// User
+	// VIEW TABLE
+	router.get('/tables', function(req, res, next) {
+		res.render('pages/tables');
+	});
+
+	// VIEW billing
+	router.get('/billing', function(req, res, next) {
+		res.render('pages/billing');
+	});
+
+	// VIEW virtual-reality
+	router.get('/virtual-reality', function(req, res, next) {
+		res.render('pages/virtual-reality');
+	});
+
+	// VIEW RTL
+	router.get('/rtl', function(req, res, next) {
+		res.render('pages/rtl');
+	});
+
+	// VIEW profile
+	router.get('/profile', function(req, res, next) {
+		res.render('pages/profile');
+	});
+
+	
+
+	
+
+	// LOGIN
+	router.get('/', function(req, res, next) {
+		res.render('pages/sign-in');
+	});
+	router.post('/login',async (req, res) => {
+		console.log();
+		if (req.body) {
+			let user = {
+				numPhone: req.body.numPhone,
+				password: req.body.password,
+			}
+			await User.login(user);
+			return res.redirect('dashboard');
+		}
+	});
+
+	// REGISTER
 	router.get('/register', function(req, res, next) {
-		res.render('auth/register');
+		res.render('pages/sign-up');
 	});
 	router.post('/register/user',User.signup);
 
 
-
-	router.post('/login',async (req, res) => {
-		await User.login(req, res);
-		res.redirect('/home');
-	});
-
+	
 	
 	
 	

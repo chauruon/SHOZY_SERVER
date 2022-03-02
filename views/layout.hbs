@@ -8,7 +8,7 @@
 			content="width=device-width, initial-scale=1, shrink-to-fit=no">
 					
 		<title>{{title}}</title>
-
+		<link rel="icon" type="image/png" href="../images/shoes_logo.png">
 		<!--/ Prevent the demo from appearing in search engines -->
 		<meta name="robots"
 			content="noindex">
@@ -26,6 +26,16 @@
 		<link type="text/css"
 			href="/assets/css/app.css"
 			rel="stylesheet">
+
+		<script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'UA-133433427-1');
+        </script>
+
 
 		<!-- Material Design Icons -->
 		<link type="text/css"
@@ -69,8 +79,8 @@
 		</style>
 	</head>
 
-
-	<body class="layout-login">
+{{!-- class="layout-login" --}}
+	<body >
 		{{{body}}}
 
 		<script src="/assets/lib/jquery.min.js"></script>
@@ -102,54 +112,5 @@
 		<script src="/assets/lib/toastr.min.js"></script>
 		<script src="/assets/js/toastr.js"></script>
 
-		<script>
-			{{!-- $(document).ready(function() {
-				toastr.options = {
-					"closeButton": true,
-					"debug": false,
-					"newestOnTop": false,
-					"progressBar": true,
-					"positionClass": "toast-top-right",
-					"preventDuplicates": false,
-					"onclick": null,
-					"showDuration": "300",
-					"hideDuration": "1000",
-					"timeOut": "10000",
-					"extendedTimeOut": "10000",
-					"showEasing": "swing",
-					"hideEasing": "linear",
-					"showMethod": "slideDown",
-					"hideMethod": "fadeOut",
-				};
-				var valSession = $('#login_counter').val();
-				function get5MinuteFromNow() { --}}
-					{{!-- get 15 day from now above --}}
-					{{!-- return new Date(new Date().valueOf() + 15 * 24 * 60 * 60 * 1000); --}}
-					{{!-- return new Date(new Date().valueOf() + 300 * 1000);
-				};
-					if (valSession >= 3) {
-						$('#count_down').countdown(get5MinuteFromNow(), function(event) {
-							
-							$('#btn_login').attr('disabled','true');
-							$('input[name="username"]').attr('disabled','true');
-							$('input[name="password"]').attr('disabled','true');
-							
-							var $this = $(this).html(event.strftime('Vui lòng chờ sau '+ '<span>%M</span> phút ' + '<span>%S</span> giây'));
-							var minutesCountDown = event.offset.minutes;
-							var secondsCountDown = event.offset.seconds;
-							if (minutesCountDown == 0  && secondsCountDown == 0) {
-								$('input[name="username"]').removeAttr('disabled');
-								$('input[name="password"]').removeAttr('disabled');
-								$("#btn_login").removeAttr('disabled');
-								$this.hide();
-							}
-						});
-					}
-
-					$('#forget_pass').click(function(){
-						toastWarning("Vui lòng liên hệ bên phòng nhân sự hoặc phòng IT");
-					});
-			}); --}}
-		</script>
 	</body>
 </html>

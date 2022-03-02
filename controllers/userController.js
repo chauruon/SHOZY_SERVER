@@ -1,10 +1,14 @@
 const User = require('../models/userModel');
 const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
+const {loginUser} = require('../services/user')
 const CryptoJS = require('crypto-js');
 const jwt = require("jsonwebtoken");
 
-exports.signup = async (req, res) => {              
+exports.signup = async (req, res) => {  
+	const user = await User.findOne({numPhone: userInfo.numPhone})
+	!user && res.status(401).json("Tài khoản đã tồn tại!");
+            
 	const{numPhone, username,password, address} = req.body;
 	try {
 		const newuser = new User({
@@ -31,36 +35,25 @@ exports.signup = async (req, res) => {
 	}
 };
 
-exports.login = async(req,res) =>{
-	try {
-		const user = await User.findOne({numPhone: req.body.numPhone})
-		!user && res.status(401).json("Tài khoản đã tồn tại!");
-
-		const hashPass = CryptoJS.AES.decrypt(user.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
-
-		hashPass !== req.body.password && res.status(401).json("Tài khoản hoặc mật khậu không chính xác! Vui lòng nhập lại");
-		const accessToken = jwt.sign(
-			{
-				id: User._id,
-			},
-			process.env.ACCESS_SECRET_TOKEN,
-			{expiresIn:"3d"});
-		const { password, ...others } = user._doc;
-
-		res.status(200).json({
-			status: true,
-			data:{
-				...others,
-				accessToken
-			}
-		});
-	} catch (err) {
-		console.log(err);
-		res.status(400).json({
-			status: false,
-			message:"Vui lòng liêm hệ admin",
-		});
+exports.login = async (userInfo) =>{
+	const user = await User.findOne({numPhone: userInfo.numPhone})
+	
+	const hashPass = CryptoJS.AES.decrypt(userInfo.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
+console.log("dfasdfsadfsadfsadfsdafsdafsadfsadf" + hashPass);
+	const accessToken = jwt.sign({
+			id: User._id,
+		},
+		process.env.ACCESS_SECRET_TOKEN,
+		{expiresIn:"3d"}
+	);
+	const { password, ...others } = user._doc;
+	const info = {
+		accessToken : accessToken,
+		others: others,
+		hashPass: hashPass,
+		user: user,
 	}
+	loginUser(info)
 };
 
 
@@ -91,3 +84,5 @@ exports.updateUser = async (req,res,next) =>{
 			});
 		}
 };
+
+
