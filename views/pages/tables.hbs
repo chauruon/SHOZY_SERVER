@@ -55,22 +55,6 @@
 							<span class="nav-link-text ms-1">Billing</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link " href="./virtual-reality">
-							<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-								<i class="ni ni-app text-info text-sm opacity-10"></i>
-							</div>
-							<span class="nav-link-text ms-1">Virtual Reality</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link " href="./rtl">
-							<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-								<i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
-							</div>
-							<span class="nav-link-text ms-1">RTL</span>
-						</a>
-					</li>
 					<li class="nav-item mt-3">
 						<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
 					</li>
@@ -99,19 +83,6 @@
 						</a>
 					</li>
 				</ul>
-			</div>
-			<div class="sidenav-footer mx-3 ">
-				<div class="card card-plain shadow-none" id="sidenavCard">
-					<img class="w-50 mx-auto" src="../asset/img/illustrations/icon-documentation.svg" alt="sidebar_illustration">
-					<div class="card-body text-center p-3 w-100 pt-0">
-						<div class="docs-info">
-							<h6 class="mb-0">Need help?</h6>
-							<p class="text-xs font-weight-bold mb-0">Please check our docs</p>
-						</div>
-					</div>
-				</div>
-				<a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-				<a class="btn btn-primary btn-sm mb-0 w-100" href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
 			</div>
 		</aside>
 		<main class="main-content position-relative border-radius-lg ">
@@ -239,7 +210,8 @@
 								</div>
 								<div>
 									<button type="button"  data-toggle="modal"
-                                            data-target="#add_product" class="btn btn-outline-primary">Add product</button>
+                                        data-target="#add_product" class="btn btn-outline-primary">Add product
+									</button>
 								</div>
 							</div>
 							<div class="card-body px-0 pt-0 pb-2">
@@ -283,8 +255,8 @@
                                                     </div>
                                                 </td>
                                                 <td><span class="text-center">20</span></td>
-                                                <td><small class="text-muted">discount</small></td>
-                                                <td>&dollar;12,402</td>
+                                                <td><small class="text-muted">&dollar;12</small></td>
+                                                <td>28</td>
                                                 <td>
 													<a href=""
                                                        class="text-muted"><i class="material-icons">more_vert</i></a>
@@ -330,83 +302,77 @@
 					</div>
 				</footer>
 			</div>
-			  <!-- Login Modal -->
-			<div class="modal fade" id="add_product" tabindex="-1" role="dialog" aria-hidden="true">
-				<form action="#">
-					<div class="modal-dialog modal-md" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="w-title">Thêm sản phẩm</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<label class="font-weight-bold">Tên sản phẩm</label>
-								<input id="name" name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm" value="">
-								<div class="row">
-									<div class="col-6">
-										<label class="font-weight-bold">Giá sản phẩm</label>
-										<input id="price" name="price" type="text" class="form-control" placeholder="Nhập giá sản phẩm" value="">
-									</div>
-									<div class="col-6">
-										<label class="font-weight-bold">Số lượng sản phẩm</label>
-										<input id="quantity" name="quantity" type="text" class="form-control" placeholder="Nhập số lượng sản phẩm" value="">
-									</div>
-									<div class="col-6">
-										<label for="created_at_from">Giảm giá sản phẩm</label>
-										<input id="discount" name="discount" type="text" class="form-control" placeholder="Nhập mức giảm giá" value="">
-									</div>
-									<div class="col-6">
-										
-									</div>
-								</div>
-								<hr>
+		</main>
 
-								<label for="sizes">sizes</label>
-								<select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
-									<option value="" disabled selected>Choose your country</option>
-									<option value="1">USA</option>
-									<option value="2">Germany</option>
-									<option value="3">France</option>
-									<option value="4">Poland</option>
-									<option value="5">Japan</option>
-								</select>
-								<div class="row mt-3">
-									<div class="col-12">
-										<div class="row">
-											<div class="col-12 text-center">
-												<span class="font-weight-bold">discount</span>
-											</div>
-											<div class="col text-center">
-												<label for="created_at_from">discount</label>
-												<input id="created_at_from" name="created_at_from" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="">
-											</div>
-											<div class="col-1">
-												<br>
-												<span class="d-flex justify-content-center mt-3"><i class="fa fa-arrow-right" style="font-size: 20px"></i></span>
-											</div>
-											<div class="col text-center">
-												<label for="created_at_to">sizes</label>
-												<input id="created_at_to" name="created_at_to" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="f">
-											</div>
+		<!-- Login Modal -->
+		<div class="modal fade" id="add_product" tabindex="-1" role="dialog" aria-hidden="true">
+			<form action="#">
+				<div class="modal-dialog modal-md" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="w-title">Additional products</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<label class="font-weight-bold">Product's name</label>
+							<input id="name" name="name" type="text" class="form-control" placeholder="Enter your product's name" value="">
+							<div class="row">
+								<div class="col-6">
+									<label class="font-weight-bold">Product price</label>
+									<input id="price" name="price" type="text" class="form-control" placeholder="Enter your product price" value="">
+								</div>
+								<div class="col-6">
+									<label class="font-weight-bold">Quantity</label>
+									<input id="quantity" name="quantity" type="text" class="form-control" placeholder="Enter the number of products" value="">
+								</div>
+								<div class="col-6">
+									<label for="created_at_from">Discount</label>
+									<input id="discount" name="discount" type="text" class="form-control" placeholder="Enter discount" value="">
+								</div>
+							</div>
+							<hr>
+
+							<label for="sizes">Sizes</label>
+							<select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
+								<option value="" disabled selected>Choose your country</option>
+								<option value="1">USA</option>
+								<option value="2">Germany</option>
+								<option value="3">France</option>
+								<option value="4">Poland</option>
+								<option value="5">Japan</option>
+							</select>
+							{{!-- <div class="row mt-3">
+								<div class="col-12">
+									<div class="row">
+										<div class="col-12 text-center">
+											<span class="font-weight-bold">discount</span>
+										</div>
+										<div class="col text-center">
+											<label for="created_at_from">discount</label>
+											<input id="created_at_from" name="created_at_from" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="">
+										</div>
+										<div class="col-1">
+											<br>
+											<span class="d-flex justify-content-center mt-3"><i class="fa fa-arrow-right" style="font-size: 20px"></i></span>
+										</div>
+										<div class="col text-center">
+											<label for="created_at_to">sizes</label>
+											<input id="created_at_to" name="created_at_to" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="f">
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">fsdfd</button>
-								<button type="submit" class="btn btn-primary btn-search">dgdgdfg</button>
-							</div>
+							</div> --}}
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary btn-search">Confirm</button>
 						</div>
 					</div>
-				</form>
-			</div>
-		</main>
-
-		
-
-
+				</div>
+			</form>
+		</div>
 
 		<div class="fixed-plugin">
 			<a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
