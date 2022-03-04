@@ -16,11 +16,13 @@
 		<link href="../asset/css/nucleo-svg.css" rel="stylesheet" />
 		<!-- CSS Files -->
 		<link id="pagestyle" href="../asset/css/argon-dashboard.css?v=2.0.0" rel="stylesheet" />
+
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	</head>
 
 	<body class="g-sidenav-show bg-gray-100">
 		<div class="min-height-300 bg-primary position-absolute w-100"></div>
-		<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+		<aside class="sidenav bg-default navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
 			<div class="sidenav-header">
 			<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
 			<div class="navbar-brand m-0">
@@ -249,9 +251,7 @@
 												</td>
 												<td>
                                                     <div class="align-items-center">
-														<textarea class="form-control" id="exampleFormControlTextarea1" rows="3">dfsadfsdfsaifgfsafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-															ddddddddddddddddfffffffffffffffffffffffffffffffffffffffffffffffffffffff
-														</textarea>
+														<textarea class="textarea form-control" id="exampleFormControlTextarea1" rows="3">dfsadfsdfsaifgfsaffffffffffffffffffffffffffffffffffffffffffffffffffff</textarea>
                                                     </div>
                                                 </td>
                                                 <td><span class="text-center">20</span></td>
@@ -306,7 +306,7 @@
 
 		<!-- Login Modal -->
 		<div class="modal fade" id="add_product" tabindex="-1" role="dialog" aria-hidden="true">
-			<form action="#">
+			<form action="/createProd" method="POST">
 				<div class="modal-dialog modal-md" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -316,58 +316,48 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<label class="font-weight-bold">Product's name</label>
+							<label class="font-weight-bold">Product's name  <span style="color: red;" >*</span></label>
 							<input id="name" name="name" type="text" class="form-control" placeholder="Enter your product's name" value="">
 							<div class="row">
 								<div class="col-6">
-									<label class="font-weight-bold">Product price</label>
+									<label class="font-weight-bold">Product price <span style="color: red;" >*</span></label>
 									<input id="price" name="price" type="text" class="form-control" placeholder="Enter your product price" value="">
 								</div>
 								<div class="col-6">
-									<label class="font-weight-bold">Quantity</label>
+									<label class="font-weight-bold">Quantity <span style="color: red;" >*</span></label>
 									<input id="quantity" name="quantity" type="text" class="form-control" placeholder="Enter the number of products" value="">
 								</div>
 								<div class="col-6">
 									<label for="created_at_from">Discount</label>
 									<input id="discount" name="discount" type="text" class="form-control" placeholder="Enter discount" value="">
 								</div>
+								<div class="col-6">
+									<label for="created_at_from">Image <span style="color: red;" >*</span></label>
+									<input type="file" name="image" multiple="multiple">
+								</div>
 							</div>
 							<hr>
-
-							<label for="sizes">Sizes</label>
-							<select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
-								<option value="" disabled selected>Choose your country</option>
-								<option value="1">USA</option>
-								<option value="2">Germany</option>
-								<option value="3">France</option>
-								<option value="4">Poland</option>
-								<option value="5">Japan</option>
+							<label for="sizes">Sizes <span style="color: red;" >*</span></label>
+							<select class="select2 form-control" name="sizes[]" multiple="multiple" style="width: 100%;">
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+								<option value="32">32</option>
+								<option value="33">33</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+								<option value="36">36</option>
 							</select>
-							{{!-- <div class="row mt-3">
-								<div class="col-12">
-									<div class="row">
-										<div class="col-12 text-center">
-											<span class="font-weight-bold">discount</span>
-										</div>
-										<div class="col text-center">
-											<label for="created_at_from">discount</label>
-											<input id="created_at_from" name="created_at_from" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="">
-										</div>
-										<div class="col-1">
-											<br>
-											<span class="d-flex justify-content-center mt-3"><i class="fa fa-arrow-right" style="font-size: 20px"></i></span>
-										</div>
-										<div class="col text-center">
-											<label for="created_at_to">sizes</label>
-											<input id="created_at_to" name="created_at_to" type="text" class="form-control ip-de" placeholder="dd-mm-yyyy" value="f">
-										</div>
-									</div>
-								</div>
-							</div> --}}
+							<label for="sizes">Description  <span style="color: red;" >*</span></label>
+							<textarea class="textarea form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary btn-search">Confirm</button>
+							<button id="submit_btn" type="submit" class="btn btn-primary btn-search">Confirm</button>
 						</div>
 					</div>
 				</div>
@@ -446,6 +436,63 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			$(document).ready(function() {
+   				$(".select2").select2();
+
+
+				$("#submit_btn").click(function(e){
+					e.preventDefault();
+					let isError = false;
+					console.log("afsdfsadfsdafsadfdsafsdafsdafsda")
+					{{!-- if($('.item_box').length > 0 ){
+						var validations = {
+							"required" : [
+								[$("#priority"), "Vui lòng chọn độ ưu tiên!"],
+								[$(".purchase_order_id"), "Vui lòng chọn mã đơn hàng!"],
+								[$(".product_id"), "Vui lòng chọn mã vật tư!"],
+								[$("#unit_id"), "Vui lòng chọn đơn vị!"],
+								[$(".amount"), "Vui lòng nhập giá!"],
+								[$(".quantity"), "Vui lòng nhập số lượng!"],
+								[$(".specification"), "Vui lòng nhập quy cách!"],
+								[$(".note"), "Vui lòng nhập ghi chú!"],
+							]
+						};
+					} else {
+						var validations = {
+							"required" : [
+								[$("#purchase_order_id"), "Vui lòng chọn mã đơn hàng!"],
+								[$("#products"), "Vui lòng chọn NPL của đơn hàng!"],
+								[$("#priority"), "Vui lòng chọn độ ưu tiên!"],
+							]
+						};
+					}  --}}
+
+					{{!-- $("#submit_btn").tmsFormValidation(validations, function(result) {
+						if ( !result ) {
+							return 0;
+						}
+						if($('.item_box').length == 0) {
+							toastWarning("Vui lòng chọn nguyên phụ liệu xuất bù!");
+							isError = true;
+							return 0;
+						}
+						$('.amount').removeNumberComma();
+						$('.quantity').removeNumberComma();
+						if(tinymce.get("req_note").getContent() == "") {
+							toastWarning("Vui lòng nhập nguyên nhân!");
+							isError = true;
+							return 0;
+						}
+						if( isError == false){
+							$("#material-offset-form").submit();
+						}
+					}); --}}
+				});
+			});
+		</script>
+
 		<!--   Core JS Files   -->
 		<script src="../asset/js/core/popper.min.js"></script>
 		<script src="../asset/js/core/bootstrap.min.js"></script>
@@ -464,5 +511,6 @@
 		<script async defer src="https://buttons.github.io/buttons.js"></script>
 		<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 		<script src="../asset/js/argon-dashboard.min.js?v=2.0.0"></script>
+
 	</body>
 </html>

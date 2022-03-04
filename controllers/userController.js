@@ -39,7 +39,7 @@ exports.login = async (userInfo) =>{
 	const user = await User.findOne({numPhone: userInfo.numPhone})
 	
 	const hashPass = CryptoJS.AES.decrypt(userInfo.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
-console.log("dfasdfsadfsadfsadfsdafsdafsadfsadf" + hashPass);
+
 	const accessToken = jwt.sign({
 			id: User._id,
 		},

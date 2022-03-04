@@ -1,30 +1,10 @@
 const User = require('../models/userModel');
 const Prod = require('../models/productModels');
 const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
-
+const {create_pro} = require('../services/user')
 // CREATE PRODUCT
-exports.createProduct = (req,res) => {
-    const input = req.body;
-    if(!input.name && !input.price && !input.quantity){
-        res.status(400).send({message:"Vui lòng nhập đủ thông tin sản phẩm"})
-        return;
-    }
-    let new_product =  new Prod(req.body);
-    new_product.save(new_product).then(prod => {
-        res.status(200).send({ 
-            status: true,
-            message: 'Thêm sản phẩm thành công!',
-            data : [
-                prod
-            ]
-        })
-    }).catch(err => {
-        res.status(500).send({
-            status:false,
-            message:'Thêm thất bại',
-            data : err.message
-        })
-    })
+exports.createProduct = (infoProd) => {
+    create_pro(infoProd);
 };
 // UPDATE PRODUCT
 exports.update_product = (req, res) => {

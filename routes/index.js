@@ -45,7 +45,6 @@
 		res.render('pages/sign-in');
 	});
 	router.post('/login',async (req, res) => {
-		console.log();
 		if (req.body) {
 			let user = {
 				numPhone: req.body.numPhone,
@@ -95,7 +94,21 @@
 	});
 
 	// Productions
-	router.post("/createProd",createProduct);
+	router.post("/createProd", async (req,res)=>{
+		if (req.body) {
+			let infoProd = {
+				name: req.body.name,
+				image: req.body.image,
+				price: req.body.price,
+				quantity: req.body.quantity,
+				discount: req.body.discount,
+				description: req.body.description,
+				sizes: req.body.sizes,
+			}
+			await createProduct(infoProd);
+			return res.redirect('tables');
+		}
+	});
 	router.post("/updateProd/:id",update_product);
 	router.get("/getProd",get_product);
 
