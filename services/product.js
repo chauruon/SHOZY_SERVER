@@ -25,6 +25,40 @@ function create_pro(req,res,infoProd) {
     }
 }
 
+
+function getpro(req,res) {
+    try {
+        Prod.find({})
+        .then(data => {
+          if(!data){
+            res.status(500).send({
+              status:false,
+              message:'Server error!',
+            })
+            return data
+          }else{
+            res.status(200).send({
+              status:true,
+              data:data
+            })
+          }})
+        .catch(err =>{
+          res.status(400).send({
+            status:false,
+            message:'Not Found',
+          })
+          return data
+        })
+    } catch (error) {
+        res.status(500).send({
+            status:false,
+            message:'Lấy danh sách thất!',
+            data : err.message
+        })
+    }
+}
+
 module.exports = {
-    create_pro
+    create_pro,
+    getpro,
 }

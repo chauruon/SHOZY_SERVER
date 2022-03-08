@@ -33,14 +33,14 @@ const productModels = new Schema({
         star:{
             type: String,
         },
-        categoris:{
+        categories:[{
             type: Schema.Types.ObjectId,
-            ref: "category"
-        },
-        sizes:{
-            type: Schema.Types.Array,
+            ref: "categories"
+        }],
+        sizes:[{
+            type: Schema.Types.ObjectId,
             ref: "sizes"
-        },
+        }],
     },
     {timestamps: true}
 );

@@ -5,6 +5,7 @@
 	const { createProduct,update_product,get_product} = require('../controllers/productController');
 	const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 	const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
+	const upfile = require('../common/upfile');
 	
 	// VIEW DASHBOARD
 	router.get('/dashboard', function(req, res, next) {
@@ -12,8 +13,10 @@
 	});
 
 	// VIEW TABLE
-	router.get('/tables', function(req, res, next) {
-		res.render('pages/tables');
+	router.get('/tables', async function(req, res, next) {
+		let listPro = await get_product(req,res);
+		console.log(listPro.data);
+		res.render('pages/tables',{list: listPro.data,NAME:"chauruon"});
 	});
 
 	// VIEW billing
@@ -21,15 +24,6 @@
 		res.render('pages/billing');
 	});
 
-	// VIEW virtual-reality
-	router.get('/virtual-reality', function(req, res, next) {
-		res.render('pages/virtual-reality');
-	});
-
-	// VIEW RTL
-	router.get('/rtl', function(req, res, next) {
-		res.render('pages/rtl');
-	});
 
 	// VIEW profile
 	router.get('/profile', function(req, res, next) {
@@ -94,23 +88,28 @@
 	});
 
 	// Productions
-	router.post("/createProd", async (req,res)=>{
-		if (req.body) {
-			let infoProd = {
-				name: req.body.name,
-				image: req.body.image,
-				price: req.body.price,
-				quantity: req.body.quantity,
-				discount: req.body.discount,
-				description: req.body.description,
-				sizes: req.body.sizes,
-			}
-			await createProduct(infoProd);
-			return res.redirect('tables');
+	var middleAddProduct = upfile.single('img');
+	router.post("/createProd",middleAddProduct, async (req,res)=>{
+		let { body } = req
+		if (req.file) {
+			let imgURL = req.file.image
+			body = { ...body, image: imgURL }
+		
+		 	await createProduct(body)
+			res.redirect('tables')
 		}
+	  
 	});
 	router.post("/updateProd/:id",update_product);
-	router.get("/getProd",get_product);
+
+
+
+
+	// router.get('/', checkLogin.check, async function (req, res, next) {
+	// 	let list = await productController.getListProducts()
+	// 	res.render('product', { list });
+	//   });
+	router.get("api/getProd",get_product);
 
 
 

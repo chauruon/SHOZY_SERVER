@@ -209,6 +209,7 @@
 							<div class="card-header card-header-large bg-white d-flex align-items-center">
 								<div class="card-header__title flex m-0">
 									<p class="h5">Products</p>
+									<p class="h1">{{ NAME }}</p>
 								</div>
 								<div>
 									<button type="button"  data-toggle="modal"
@@ -216,9 +217,10 @@
 									</button>
 								</div>
 							</div>
+							
 							<div class="card-body px-0 pt-0 pb-2">
 								<div class="table-responsive p-0">
-									<table class="table mb-0 thead-border-top-0">
+									<table id="list_products" class="table mb-0 thead-border-top-0">
                                         <thead>
                                             <tr>
                                                 <th class="text-center" style="width: 137px;">Image</th>
@@ -230,38 +232,40 @@
 												<th></th>
                                             </tr>
                                         </thead>
-                                        <tbody class="list"id="staff">
-                                            <tr>
-                                                <td style="padding-right: 0px !important;">
-                                                    <div  class="align-items-center">
-                                                        <div style="width: 113px !important;" class="avatar avatar-xxl mr-2">
-                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg"
-                                                                 alt="Avatar"
-                                                                 class="avatar-img rounded">
-                                                        </div>
-                                                    </div>
-                                                </td>
-												<td>
-													<div class="media-body">
-                                                        <span class="d-inline-block text-truncate fw-bold" style="max-width: 250px;">Michael sdfsadfasfsdsafdfasddgdgdfgdfsgsdgfsdgSmith</span>
-                                                    </div>
-													<div class="media-body">
-                                                        <span class="js-lists-values-employee-name">$123</span>
-                                                    </div>
-												</td>
-												<td>
-                                                    <div class="align-items-center">
-														<textarea class="textarea form-control" id="exampleFormControlTextarea1" rows="3">dfsadfsdfsaifgfsaffffffffffffffffffffffffffffffffffffffffffffffffffff</textarea>
-                                                    </div>
-                                                </td>
-                                                <td><span class="text-center">20</span></td>
-                                                <td><small class="text-muted">&dollar;12</small></td>
-                                                <td>28</td>
-                                                <td>
-													<a href=""
-                                                       class="text-muted"><i class="material-icons">more_vert</i></a>
-												</td>
-                                            </tr>
+                                        <tbody class="list"id="section-function">
+											{{#each list}}
+												<tr id="item_product" data-index="">
+													<td style="padding-right: 0px !important;">
+														<div  class="align-items-center">
+															<div style="width: 113px !important;" class="avatar avatar-xxl mr-2">
+																<img src="assets/images/256_luke-porter-261779-unsplash.jpg"
+																	alt="Avatar"
+																	class="avatar-img setImg rounded">
+															</div>
+														</div>
+													</td>
+													<td>
+														<div class="media-body">
+															<span id="name" class="d-inline-block text-truncate fw-bold" data-index="" style="max-width: 250px;">{{ list.data.name }}</span>
+														</div>
+														<div class="media-body">
+															<span class="price js-lists-values-employee-name">&dollar; 123</span>
+														</div>
+													</td>
+													<td>
+														<div class="align-items-center">
+															<textarea class="decs textarea form-control" id="exampleFormControlTextarea1" rows="3">dfsadfsdfsaifgfsaffffffffffffffffffffffffffffffffffffffffffffffffffff</textarea>
+														</div>
+													</td>
+													<td><span class="text-center">20</span></td>
+													<td><small class="text-muted">12</small></td>
+													<td class="size">28</td>
+													<td>
+														<a href=""
+															class="text-muted"><i class="material-icons">more_vert</i></a>
+													</td>
+												</tr>
+											{{/each}}
                                         </tbody>
                                     </table>
 								</div>
@@ -306,7 +310,7 @@
 
 		<!-- Login Modal -->
 		<div class="modal fade" id="add_product" tabindex="-1" role="dialog" aria-hidden="true">
-			<form action="/createProd" method="POST">
+			<form action="/createProd" method="POST" id="submit_form">
 				<div class="modal-dialog modal-md" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -321,24 +325,24 @@
 							<div class="row">
 								<div class="col-6">
 									<label class="font-weight-bold">Product price <span style="color: red;" >*</span></label>
-									<input id="price" name="price" type="text" class="form-control" placeholder="Enter your product price" value="">
+									<input id="price" name="price" class="form-control number-format" type="text" placeholder="Enter your product price" value="">
 								</div>
 								<div class="col-6">
-									<label class="font-weight-bold">Quantity <span style="color: red;" >*</span></label>
-									<input id="quantity" name="quantity" type="text" class="form-control" placeholder="Enter the number of products" value="">
+									<label class="font-weight-bold ">Quantity <span style="color: red;" >*</span></label>
+									<input id="quantity" name="quantity" class="form-control number-format" type="text" placeholder="Enter the number of products" value="">
 								</div>
 								<div class="col-6">
 									<label for="created_at_from">Discount</label>
-									<input id="discount" name="discount" type="text" class="form-control" placeholder="Enter discount" value="">
+									<input id="discount" name="discount" class="form-control number-format" type="text" placeholder="Enter discount" value="">
 								</div>
 								<div class="col-6">
 									<label for="created_at_from">Image <span style="color: red;" >*</span></label>
-									<input type="file" name="image" multiple="multiple">
+									<input id="image" type="file" name="image" multiple="multiple">
 								</div>
 							</div>
 							<hr>
 							<label for="sizes">Sizes <span style="color: red;" >*</span></label>
-							<select class="select2 form-control" name="sizes[]" multiple="multiple" style="width: 100%;">
+							<select id="size" class="select2 form-control" name="sizes[]" multiple="multiple" style="width: 100%;">
 								<option value="25">25</option>
 								<option value="26">26</option>
 								<option value="27">27</option>
@@ -352,8 +356,8 @@
 								<option value="35">35</option>
 								<option value="36">36</option>
 							</select>
-							<label for="sizes">Description  <span style="color: red;" >*</span></label>
-							<textarea class="textarea form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+							<label for="description">Description  <span style="color: red;" >*</span></label>
+							<textarea id="description" class="textarea form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -440,55 +444,41 @@
 		<script>
 			$(document).ready(function() {
    				$(".select2").select2();
-
+ 				$("#price").tmsInputNumber();
+				$("#quantity").tmsInputNumber();
+				$("#discount").tmsInputNumber();
+				formatFloatNumber();
 
 				$("#submit_btn").click(function(e){
 					e.preventDefault();
-					let isError = false;
-					console.log("afsdfsadfsdafsadfdsafsdafsdafsda")
-					{{!-- if($('.item_box').length > 0 ){
-						var validations = {
-							"required" : [
-								[$("#priority"), "Vui lòng chọn độ ưu tiên!"],
-								[$(".purchase_order_id"), "Vui lòng chọn mã đơn hàng!"],
-								[$(".product_id"), "Vui lòng chọn mã vật tư!"],
-								[$("#unit_id"), "Vui lòng chọn đơn vị!"],
-								[$(".amount"), "Vui lòng nhập giá!"],
-								[$(".quantity"), "Vui lòng nhập số lượng!"],
-								[$(".specification"), "Vui lòng nhập quy cách!"],
-								[$(".note"), "Vui lòng nhập ghi chú!"],
-							]
-						};
-					} else {
-						var validations = {
-							"required" : [
-								[$("#purchase_order_id"), "Vui lòng chọn mã đơn hàng!"],
-								[$("#products"), "Vui lòng chọn NPL của đơn hàng!"],
-								[$("#priority"), "Vui lòng chọn độ ưu tiên!"],
-							]
-						};
-					}  --}}
-
-					{{!-- $("#submit_btn").tmsFormValidation(validations, function(result) {
+					let isError = false;					
+					var validTypes = ["gif", "jpeg", "png", "jpg"];
+					$("#image").validateFile(validTypes, function(result) {
 						if ( !result ) {
-							return 0;
-						}
-						if($('.item_box').length == 0) {
-							toastWarning("Vui lòng chọn nguyên phụ liệu xuất bù!");
 							isError = true;
 							return 0;
 						}
-						$('.amount').removeNumberComma();
-						$('.quantity').removeNumberComma();
-						if(tinymce.get("req_note").getContent() == "") {
-							toastWarning("Vui lòng nhập nguyên nhân!");
+					});
+					var validations = {
+						"required" : [
+							[$('#name'), "Vui lòng nhập tên sản phẩm!"],
+							[$('#price'), "Vui lòng nhập giá!"],
+							[$('#quantity'), "Vui lòng nhập số lượng!"],
+							[$('#image'), "Vui lòng chọn hình!"],
+							[$('#size'), "Vui lòng chọn kích thước!"],
+							[$('#description'), "Vui lòng nhập mô tả!"],
+						]
+					};
+					$("#submit_btn").tmsFormValidation(validations, function (result) {
+						if (!result) {
 							isError = true;
 							return 0;
 						}
-						if( isError == false){
-							$("#material-offset-form").submit();
+						if(isError == false) {
+							$('#submit_form').submit();
 						}
-					}); --}}
+					}); 
+
 				});
 			});
 		</script>

@@ -1,9 +1,10 @@
 const User = require('../models/userModel');
 const Prod = require('../models/productModels');
 const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
-const {create_pro} = require('../services/user')
+const {create_pro,getpro} = require('../services/product')
 // CREATE PRODUCT
 exports.createProduct = (infoProd) => {
+    console.log(`sdfasdfsfsdfsfsdfsdfsfsdfsdfdsfasdf: ${infoProd}`);
     create_pro(infoProd);
 };
 // UPDATE PRODUCT
@@ -45,27 +46,27 @@ exports.update_product = (req, res) => {
     })
 }
 //GET ALL PRODUCTS
-exports.get_product = (req,res) => {
+exports.get_product = (req, res) => {
     try {
         Prod.find({})
         .then(data => {
-          if(!data){
-            res.status(500).send({
-              status:false,
-              message:'Server error!',
-            })
-            return data
-          }else{
-            res.status(200).send({
-              status:true,
-              data:data
-            })
-          }})
+            if(!data){
+                res.status(500).send({
+                status:false,
+                message:'Server error!',
+                })
+                return data
+            }else{
+                res.status(200).send({
+                status:true,
+                data:data
+                })
+            }})
         .catch(err =>{
-          res.status(400).send({
-            status:false,
-            message:'Not Found',
-          })
+            res.status(400).send({
+                status:false,
+                message:'Not Found',
+            })
           return data
         })
     } catch (error) {
@@ -109,6 +110,7 @@ exports.delete_product = async (req, res) =>{
         })
     }
 }
+
 
 
 
