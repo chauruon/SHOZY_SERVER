@@ -33,18 +33,13 @@ const productModels = new Schema({
         star:{
             type: String,
         },
-        categories:[{
-            type: Schema.Types.ObjectId,
-            ref: "categories"
-        }],
-        sizes:[{
+        idCategory: { type: Schema.Types.ObjectId, ref: "categories" },
+        idSizes:[{
             type: Schema.Types.ObjectId,
             ref: "sizes"
         }],
     },
     {timestamps: true}
 );
-
-
 
 module.exports = mongoose.model('productions',productModels);

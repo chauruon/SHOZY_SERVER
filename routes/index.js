@@ -2,10 +2,11 @@
 	var router = express.Router();
 
 	const User = require('../controllers/userController');
-	const { createProduct,update_product,get_product} = require('../controllers/productController');
+	const productController = require('../controllers/productController');
 	const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
 	const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
 	const upfile = require('../common/upfile');
+	const Prod = require('../models/productModels');
 	
 	// VIEW DASHBOARD
 	router.get('/dashboard', function(req, res, next) {
@@ -13,10 +14,27 @@
 	});
 
 	// VIEW TABLE
-	router.get('/tables', async function(req, res, next) {
-		let listPro = await get_product(req,res);
-		console.log(listPro.data);
-		res.render('pages/tables',{list: listPro.data,NAME:"chauruon"});
+	router.get('/tables',async function(req, res, next) {
+		let list = await productController.getListProducts();
+		res.render('pages/tables',{list});
+
+		  
+		// Prod
+		// .find() // find tất cả các data
+		// .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+		// .limit(perPage)
+		// .exec((err, list) => {
+		// 	console.log(list);
+		// 	Prod.countDocuments((err, count) => { // đếm để tính có bao nhiêu trang
+		// 		if (err) return next(err);
+		// 		// res.send(products) // Trả về dữ liệu các sản phẩm theo định dạng như JSON, XML,...
+		// 		res.render('pages/tables', {
+		// 			list, // sản phẩm trên một page
+		// 			current: page, // page hiện tại
+		// 			pages: Math.ceil(count / perPage) // tổng số các page
+		// 		});
+		// 	});
+		// });
 	});
 
 	// VIEW billing
@@ -24,12 +42,11 @@
 		res.render('pages/billing');
 	});
 
-
 	// VIEW profile
 	router.get('/profile', function(req, res, next) {
 		res.render('pages/profile');
 	});
-
+	
 	
 
 	
@@ -45,7 +62,7 @@
 				password: req.body.password,
 			}
 			await User.login(user);
-			return res.redirect('dashboard');
+			return res.redirect('/dashboard');			
 		}
 	});
 
@@ -89,29 +106,26 @@
 
 	// Productions
 	var middleAddProduct = upfile.single('img');
-	router.post("/createProd",middleAddProduct, async (req,res)=>{
+	router.post("/createProd",upfile.single('image'), async (req,res)=>{
 		let { body } = req
 		if (req.file) {
 			let imgURL = req.file.image
-			body = { ...body, image: imgURL }
+			body = { ...body, image: imgURL}
 		
-		 	await createProduct(body)
+		 	await productController.createProduct(body)
 			res.redirect('tables')
 		}
 	  
 	});
-	router.post("/updateProd/:id",update_product);
+	router.get("/getPro",productController.get_product);
+	router.post("/updateProd/:id",productController.update_product);
 
 
-
-
-	// router.get('/', checkLogin.check, async function (req, res, next) {
-	// 	let list = await productController.getListProducts()
-	// 	res.render('product', { list });
-	//   });
-	router.get("api/getProd",get_product);
-
-
+	// Shopping cart
+	router.post("/toCart",async (req,res,next)=>{
+		const {id} = req.body;
+	 	await productController.toCart(id)
+	});
 
 	
 module.exports = router;

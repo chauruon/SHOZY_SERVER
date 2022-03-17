@@ -5,9 +5,7 @@ const {loginUser} = require('../services/user')
 const CryptoJS = require('crypto-js');
 const jwt = require("jsonwebtoken");
 
-exports.signup = async (req, res) => {  
-	const user = await User.findOne({numPhone: userInfo.numPhone})
-	!user && res.status(401).json("Tài khoản đã tồn tại!");
+exports.signup = async (req, res) => {
             
 	const{numPhone, username,password, address} = req.body;
 	try {
@@ -16,7 +14,7 @@ exports.signup = async (req, res) => {
 			username : username,
 			isAdmin: false,
 			password : CryptoJS.AES.encrypt(req.body.password,process.env.ACCESS_SECRET).toString(),
-			address : address, 
+			address : address,
 		});
 		
 		const userRegiter = await newuser.save();
@@ -35,11 +33,30 @@ exports.signup = async (req, res) => {
 	}
 };
 
+// exports.login = async (userInfo) =>{
+// 	console.log(userInfo);
+// 	const user = await User.findOne({numPhone: userInfo.numPhone})
+// 	const hashPass = CryptoJS.AES.decrypt(user.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
+// 	const accessToken = jwt.sign({
+// 			id: User._id,
+// 		},
+// 		process.env.ACCESS_SECRET_TOKEN,
+// 		{expiresIn:"3d"}
+// 	);
+// 	const { password, ...others } = user._doc;
+// 	const info = {
+// 		accessToken : accessToken,
+// 		others: others,
+// 		hashPass: hashPass,
+// 		password: userInfo.password
+// 	}
+// 	loginUser(info)
+// };
+
 exports.login = async (userInfo) =>{
 	const user = await User.findOne({numPhone: userInfo.numPhone})
-	
-	const hashPass = CryptoJS.AES.decrypt(userInfo.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
-
+	const hashPass = CryptoJS.AES.decrypt(user.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
+console.log("hashPass%%%%%%%%%%%%: " + hashPass);
 	const accessToken = jwt.sign({
 			id: User._id,
 		},

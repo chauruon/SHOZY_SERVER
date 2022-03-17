@@ -1,11 +1,11 @@
 const User = require('../models/userModel');
 const Prod = require('../models/productModels');
+const Cart = require('../models/cartModels');
 const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/auth');
-const {create_pro,getpro} = require('../services/product')
+const servicesPro = require('../services/product')
 // CREATE PRODUCT
 exports.createProduct = (infoProd) => {
-    console.log(`sdfasdfsfsdfsfsdfsdfsfsdfsdfdsfasdf: ${infoProd}`);
-    create_pro(infoProd);
+    servicesPro.create_pro(infoProd);
 };
 // UPDATE PRODUCT
 exports.update_product = (req, res) => {
@@ -50,33 +50,33 @@ exports.get_product = (req, res) => {
     try {
         Prod.find({})
         .then(data => {
-            if(!data){
-                res.status(500).send({
-                status:false,
-                message:'Server error!',
-                })
-                return data
-            }else{
-                res.status(200).send({
-                status:true,
-                data:data
+            if(data){
+                res.status(200).json({
+                    status:true,
+                    data:data
                 })
             }})
         .catch(err =>{
-            res.status(400).send({
+            res.status(400).json({
                 status:false,
                 message:'Not Found',
+                err: err.message
             })
           return data
         })
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status:false,
             message:'Lấy danh sách thất!',
             data : err.message
         })
     }
 }
+
+exports.getListProducts = async function getListProducts() {
+    return await servicesPro.getListProducts()
+}
+
 // DELETE PRODUCTS
 exports.delete_product = async (req, res) =>{
     var id_delete = req.params.id ? {_id:req.params.id} : {};
@@ -107,6 +107,56 @@ exports.delete_product = async (req, res) =>{
             status:false,
             message:'',
             error: err.message,
+        })
+    }
+}
+
+
+
+
+// Shopping cart
+exports.toCart = async (id) => {
+    let cart = {}
+    let pro = await Prod.findById(id)
+    console.log(pro);
+	if (pro) {
+		cart.nameProduct = pro.name
+		cart.price = pro.price
+		cart.description = pro.description
+		cart.quantity = pro.quantity
+        cart.idProd = pro.id
+		if (pro.image) {
+			cart.img = pro.image
+		}
+		
+	}
+    servicesPro.toCart(cart);
+};
+
+exports.getToCart = async (req, res) =>{
+    var id_prod = req.params.id ? {_id:req.params.id} : {};
+    try {
+        Cart.find({})
+        .then(data => {
+            if(data){
+                res.status(200).json({
+                    status:true,
+                    data:data
+                })
+            }})
+        .catch(err =>{
+            res.status(400).json({
+                status:false,
+                message:'Not Found',
+                err: err.message
+            })
+          return data
+        })
+    } catch (error) {
+        res.status(500).json({
+            status:false,
+            message:'Lấy danh sách thất!',
+            data : err.message
         })
     }
 }

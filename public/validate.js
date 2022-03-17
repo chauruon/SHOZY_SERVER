@@ -156,72 +156,7 @@
 	    		}
 
 				break;
-    		case "phone" :
-    			let phones = [];
-				if ( element.length >= 1 ) {
-	    			for (var iEl = 0; iEl < element.length; iEl++) {
-	    				phones.push($(element[iEl]).val());
-	    			}
-	    			var formData = [];
-                    formData =  {
-                        'phones': phones,
-                    };
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "/validate-phone-numbers/",
-                        data: formData
-		    		}).done(function (data) {
-		    			if (data.success == true ) {
-		    				if(data.phone == false) {
-	    						for (var iEl = 0; iEl < element.length; iEl++) {
-									callback.call(this, false, dtCallBack, mess);
-				    			}
-		    				} else {
-	    						for (var iEl = 0; iEl < element.length; iEl++) {
-									callback.call(this, true, dtCallBack);
-				    			}
-		    				}
-		    			}
-		    		});
-	    		} else {
-	    			$.ajax({
-		    			async: false,
-		    			url: '/validate-phone-number/' + elVal
-		    		}).done(function (data) {
-		    			if (data.success == true ) {
-		    				if(data.phone == false) {
-								callback.call(this, false, dtCallBack, mess);
-		    				} else {
-								callback.call(this, true, dtCallBack);
-		    				}
-		    			}
-		    		});
-	    		}
-				break;
-    		case "birthday" : 
-	    		var toDay = new Date();
-	    		var dd = String(toDay.getDate()).padStart(2, '0');
-	    		var mm = String(toDay.getMonth() + 1).padStart(2, '0'); 
-	    		var yyyy = toDay.getFullYear();
-
-	    		toDay = dd + '-' + mm + '-' + yyyy;
-	    		if(toDay != "" && elVal != "") {
-					let birthday = elVal;
-	    			var starteded = toDay.split("-").reverse().join("-");
-	    			var completed = birthday.split("-").reverse().join("-");
-
-	    			if(new Date(starteded) < new Date(completed))
-	    			{
-	    				callback.call(this, false, dtCallBack, mess);
-	    			} else {
-	    				callback.call(this, true, dtCallBack);
-	    			}
-	    		}
-				if(elVal == "") {
-					callback.call(this, true, dtCallBack);
-				}
-				break;
+    		
     		default:
     			callback.call(this, false, dtCallBack);
     	}

@@ -5,9 +5,9 @@ var storage = multer.diskStorage({
         cb(null, './public/images/products')
     },
     filename: function(req, file, cb){
-        cb(null, file.image + '-' + Date.now())
+        cb(null, file.originalname + '-' + Date.now())
     },
     
 })
 module.exports = 
-    multer({storage: storage, limits: { fileSize: 4 * 1024 * 1024 }})
+    multer({storage: storage})
