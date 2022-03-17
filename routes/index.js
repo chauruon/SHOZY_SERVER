@@ -126,6 +126,7 @@
 		const {id} = req.body;
 	 	await productController.toCart(id)
 	});
+	router.get("/getToCart",productController.getToCart);
 
 	
 module.exports = router;
