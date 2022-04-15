@@ -23,7 +23,7 @@ for (const name of Object.keys(nets)) {
                 results[name] = [];
             }
             results[name].push(net.address);
-			console.log(results[name]);
+			console.log(`Địa chỉ IP server: ${results[name][0]}`);
         }
     }
 }

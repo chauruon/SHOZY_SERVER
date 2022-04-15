@@ -111,15 +111,22 @@
 		if (req.file) {
 			let imgURL = req.file.image
 			body = { ...body, image: imgURL}
-		
-		 	await productController.createProduct(body)
+		console.log(body);
+			await productController.createProduct(body)
 			res.redirect('tables')
 		}
 	  
 	});
 	router.get("/getPro",productController.get_product);
 	router.post("/updateProd/:id",productController.update_product);
-
+	router.post("/creProd", async (req,res)=>{
+		let { body } = req
+		return await productController.createProduct(body)
+	});
+	router.post("/DeletePro",async (req,res,next)=>{
+		const {id} = req.body;
+		 await productController.delete()
+	});
 
 	// Shopping cart
 	router.post("/toCart",async (req,res,next)=>{
@@ -127,6 +134,9 @@
 	 	await productController.toCart(id)
 	});
 	router.get("/getToCart",productController.getToCart);
-
+	router.post("/DeleteToCart",async (req,res,next)=>{
+		const {id} = req.body;
+		 await productController.deleteCart()
+	});
 	
 module.exports = router;

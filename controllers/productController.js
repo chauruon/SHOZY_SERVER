@@ -5,6 +5,7 @@ const {check, toastrsuccess, toastrerror, toastrwarning} = require('../common/au
 const servicesPro = require('../services/product')
 // CREATE PRODUCT
 exports.createProduct = (infoProd) => {
+    console.log(infoProd);
     servicesPro.create_pro(infoProd);
 };
 // UPDATE PRODUCT
@@ -132,6 +133,15 @@ exports.toCart = async (id) => {
 	}
     servicesPro.toCart(cart);
 };
+
+exports.delete= async (req,res) =>{
+    // var id_delete = req.params.id ? {_id:req.params.id} : {};
+    Prod.remove();
+}
+exports.deleteCart= async (req,res) =>{
+    // var id_delete = req.params.id ? {_id:req.params.id} : {};
+    Cart.remove({});
+}
 
 exports.getToCart = async (req, res) =>{
     var id_prod = req.params.id ? {_id:req.params.id} : {};

@@ -35,7 +35,7 @@ const productModels = new Schema({
         },
         idCategory: { type: Schema.Types.ObjectId, ref: "categories" },
         idSizes:[{
-            type: Schema.Types.ObjectId,
+            type: Schema.Types.Array,
             ref: "sizes"
         }],
     },
