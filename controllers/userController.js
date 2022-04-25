@@ -53,10 +53,12 @@ exports.signup = async (req, res) => {
 // 	loginUser(info)
 // };
 
-exports.login = async (userInfo) =>{
+exports.login = async (req,res,userInfo) =>{
+	// console.log("user info: " +JSON.stringify(userInfo));
 	const user = await User.findOne({numPhone: userInfo.numPhone})
+	// console.log("user: " +JSON.stringify(user));
 	const hashPass = CryptoJS.AES.decrypt(user.password,process.env.ACCESS_SECRET).toString(CryptoJS.enc.Utf8);
-console.log("hashPass%%%%%%%%%%%%: " + hashPass);
+	// console.log("hashPass%%%%%%%%%%%%: " + hashPass);
 	const accessToken = jwt.sign({
 			id: User._id,
 		},
@@ -66,11 +68,11 @@ console.log("hashPass%%%%%%%%%%%%: " + hashPass);
 	const { password, ...others } = user._doc;
 	const info = {
 		accessToken : accessToken,
-		others: others,
+		user: others,
 		hashPass: hashPass,
-		user: user,
+		// user: user,
 	}
-	loginUser(info)
+	loginUser(req,res,info)
 };
 
 

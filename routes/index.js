@@ -61,8 +61,8 @@
 				numPhone: req.body.numPhone,
 				password: req.body.password,
 			}
-			await User.login(user);
-			return res.redirect('/dashboard');			
+			await User.login(req,res,user);
+			// return res.redirect('/dashboard');			
 		}
 	});
 
@@ -129,9 +129,13 @@
 	});
 
 	// Shopping cart
-	router.post("/toCart",async (req,res,next)=>{
-		const {id} = req.body;
-	 	await productController.toCart(id)
+	router.post("/toCart",async (req,res)=>{
+		if (req.body) {			
+			let id = req.body.id;
+			console.log("id pro to cart: " + JSON.stringify(req.body));
+			console.log("id to cart: " + JSON.stringify(id));
+			 await productController.toCart(id)
+		}
 	});
 	router.get("/getToCart",productController.getToCart);
 	router.post("/DeleteToCart",async (req,res,next)=>{

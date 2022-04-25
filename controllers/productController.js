@@ -119,7 +119,7 @@ exports.delete_product = async (req, res) =>{
 exports.toCart = async (id) => {
     let cart = {}
     let pro = await Prod.findById(id)
-    console.log(pro);
+    console.log("to cart: " + JSON.stringify(id));
 	if (pro) {
 		cart.nameProduct = pro.name
 		cart.price = pro.price
@@ -140,7 +140,13 @@ exports.delete= async (req,res) =>{
 }
 exports.deleteCart= async (req,res) =>{
     // var id_delete = req.params.id ? {_id:req.params.id} : {};
-    Cart.remove({});
+    Cart.deleteMany(function(err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("success")
+        }
+    });
 }
 
 exports.getToCart = async (req, res) =>{
