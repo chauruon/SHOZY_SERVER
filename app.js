@@ -28,11 +28,8 @@ for (const name of Object.keys(nets)) {
     }
 }
 
-mongoose.connect(process.env.DB_ACCESS_URL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-}).then(() => console.log("Connected successfully to server!"))
-.catch((err) => console.log("DB error", err));
+mongoose.connect(process.env.DB_ACCESS_URL).then(() => console.log("Connected successfully to server!"))
+.catch((err) => console.log("DB error", err.message));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

@@ -12,7 +12,7 @@ function create_pro(infoProd,req,res,) {
 	let new_product =  new Prod(infoProd);
 	console.log(infoProd);
 	let size_product =  new Sizes(infoProd);
-	size_product.save(size_product)
+	size_product.save();
 	new_product.save(new_product).then(prod => {
 		res.json({ 
 			status: true,
@@ -24,9 +24,10 @@ function create_pro(infoProd,req,res,) {
 	});
 }
 
-async function toCart(product) {
+function toCart(product) {
 	const cart = new Cart(product)
-	await cart.save();
+	console.log("REQ CART: " + cart);
+	cart.save();
 }
 
 async function getListProducts() {

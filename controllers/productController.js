@@ -74,6 +74,8 @@ exports.get_product = (req, res) => {
     }
 }
 
+
+
 exports.getListProducts = async function getListProducts() {
     return await servicesPro.getListProducts()
 }
@@ -119,13 +121,13 @@ exports.delete_product = async (req, res) =>{
 exports.toCart = async (id) => {
     let cart = {}
     let pro = await Prod.findById(id)
-    console.log("to cart: " + JSON.stringify(id));
+    console.log("GET PRODUCT BY ID: " + JSON.stringify(pro));
 	if (pro) {
 		cart.nameProduct = pro.name
 		cart.price = pro.price
 		cart.description = pro.description
 		cart.quantity = pro.quantity
-        cart.idProd = pro.id
+        cart.id_Prod = pro.id
 		if (pro.image) {
 			cart.img = pro.image
 		}
@@ -133,6 +135,8 @@ exports.toCart = async (id) => {
 	}
     servicesPro.toCart(cart);
 };
+
+
 
 exports.delete= async (req,res) =>{
     // var id_delete = req.params.id ? {_id:req.params.id} : {};

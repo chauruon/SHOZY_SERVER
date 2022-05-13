@@ -8,7 +8,11 @@ const cartModels = new Schema(
         description : {type: String},
         img : {type: String},
         quantity : {type: Number},
-        idProd : {type: String},
+        totalPrice: {type: Number},
+        id_Prod : {
+            type: Schema.Types.ObjectId,
+            ref: "productions"
+        },
     },
     {timestamps: true}
 );

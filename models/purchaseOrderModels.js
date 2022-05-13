@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; 
 
-const productModels = new Schema({
+const purchaseOrderModels = new Schema({
         name : {
             type : String,
             required: true
@@ -17,6 +17,9 @@ const productModels = new Schema({
             type : String,
             required: true
         },
+        totalPrice:{
+            type:Number,
+        },
         discount : {
             type : String,
         },
@@ -24,22 +27,22 @@ const productModels = new Schema({
             type : String,
             required: true
         },
-        banner:{
-            type: String,
-        },
-        thumb:{
-            type: String,
-        },
         star:{
             type: String,
         },
-        id_Category: { type: Schema.Types.ObjectId, ref: "categories" },
+        id_product:{
+            type:Schema.Types.ObjectId,
+            ref:"productions"
+        },
+        id_category: { 
+            type: Schema.Types.ObjectId,
+            ref: "categories"
+        },
         sizes:{
             type: Array,
-            default: [{ sizes: "" }],
         },
     },
     {timestamps: true}
 );
 
-module.exports = mongoose.model('productions',productModels);
+module.exports = mongoose.model('purchase_order',purchaseOrderModels);

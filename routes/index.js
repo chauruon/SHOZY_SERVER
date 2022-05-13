@@ -1,5 +1,6 @@
 	var express = require('express');
 	var router = express.Router();
+	const mongoose = require("mongoose");
 
 	const User = require('../controllers/userController');
 	const productController = require('../controllers/productController');
@@ -7,7 +8,8 @@
 	const {verifyToken,verifyTokenAndAuthoriation} = require('../common/verifyToken');
 	const upfile = require('../common/upfile');
 	const Prod = require('../models/productModels');
-	
+	const carts = require('../models/cartModels');
+	const purchase_order = require('../models/purchaseOrderModels');
 	// VIEW DASHBOARD
 	router.get('/dashboard', function(req, res, next) {
 		res.render('pages/dashboard');
@@ -106,16 +108,46 @@
 
 	// Productions
 	var middleAddProduct = upfile.single('img');
-	router.post("/createProd",upfile.single('image'), async (req,res)=>{
-		let { body } = req
-		if (req.file) {
-			let imgURL = req.file.image
-			body = { ...body, image: imgURL}
-		console.log(body);
-			await productController.createProduct(body)
-			res.redirect('tables')
+	/**
+	 * @param {id}
+	 * chi tiết sản phẩm
+	*/
+	router.get(`/:id`, async (req, res) => {
+		console.log("hello");
+	
+		if (!mongoose.isValidObjectId(req.params.id)) {
+		return res.status(400).send("Invalid Prouct Id");
 		}
-	  
+	
+		const product = await Prod.findById(req.params.id).populate(
+			"id_Category"
+		);
+		// const product = await Product.findOne({_id:req.params.id}).populate("categories_id");
+	
+		console.log("product", product);
+	
+		if (!product) {
+		res.status(500).json({
+			success: false,
+			message: "Product not found",
+		});
+		}
+		res.send(product);
+	});
+	/**
+	 * @param {count}
+	 * lấy giới hạn số lượng sản phẩm
+	 */
+	router.get(`/get/product/:count`, async (req, res) => {
+		const count = req.params.count ? req.params.count : 0;
+		const products = await Prod.find({}).limit(+count);
+		console.log("count", +count);
+		if (!products) {
+		res.status(500).json({
+			success: false,
+		});
+		}
+		res.send(products);
 	});
 	router.get("/getPro",productController.get_product);
 	router.post("/updateProd/:id",productController.update_product);
@@ -129,13 +161,59 @@
 	});
 
 	// Shopping cart
-	router.post("/toCart",async (req,res)=>{
-		if (req.body) {			
-			let id = req.body.id;
-			console.log("id pro to cart: " + JSON.stringify(req.body));
-			console.log("id to cart: " + JSON.stringify(id));
-			 await productController.toCart(id)
-		}
+	router.post(`/toCart`, async (req, res) => {	
+		let id = req.body.id;
+		let quantity = req.body.quantity;
+		const product = await Prod.findById(req.body.id).populate(
+			"id_Category"
+		);
+		let itemPrice = product.price;
+		let total = itemPrice * quantity;
+		let Cart = new carts({
+			nameProduct: product.name,
+			price:itemPrice,
+			img: product.image ,
+			description: product.description,
+			quantity: quantity ,
+			totalPrice: total,
+			id_Prod: id
+		});
+		Cart = await Cart.save();
+	
+		if (!Cart) return res.status(500).send("The product cannot be created");
+	
+		res.send(Cart);
+	});
+
+	/**
+	 * 
+	 * đơn đặt hàng
+	 */
+	router.post(`/purchase_order`, async (req, res) => {	
+
+		let quantity = req.body.quantity;
+		const product = await Prod.findById(req.body.id).populate(
+			"id_Category"
+		);
+		console.log("đơn đặt hàng:" + product.id);
+		let itemPrice = product.price;
+		let total = itemPrice * quantity;
+		let purchase_orders = new purchase_order({
+			name: product.name,
+			price: itemPrice,
+			image: product.image ,
+			description: product.description,
+			quantity: quantity ,
+			id_product: product._id,
+			id_category: product.id_Category,
+			totalPrice: total,
+			sizes: product.sizes
+		});
+		purchase_orders = await purchase_orders.save();
+	
+		if (!purchase_orders) return res.status(500).send("The product cannot be purchase_orders");
+	
+		res.send(purchase_orders);
 	});
 	router.get("/getToCart",productController.getToCart);
 	router.post("/DeleteToCart",async (req,res,next)=>{

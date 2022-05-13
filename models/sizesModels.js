@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const sizesModels = new Schema(
     {
         size : {type : Array,},
-        idProd:{type: Schema.Types.ObjectId, ref: "productions"}
+        id_Prod:{type: Schema.Types.ObjectId, ref: "productions"}
     },
     {timestamps: true}
 );
